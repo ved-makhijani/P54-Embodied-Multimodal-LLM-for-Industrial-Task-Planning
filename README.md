@@ -24,11 +24,11 @@ User instruction
 
 | Name | Student ID | Role |
 |---|---|---|
-| Minh Hoang Duong | 104487115 | Team Leader |
-| Lakshit Bansal | 105028858 | Vision Module |
-| Ved Jay Makhijani | 104762184 | LLM Module / Pipeline |
-| Dinith Thejana | 105231766 | Simulation Backend |
-| Kaveesha Dharmadasa | 105271678 | Documentation / Scene Representation |
+| Minh Hoang Duong | 104487115 | Team Member (Visualization) |
+| Lakshit Bansal | 105028858 | Team Member (Vision Module) |
+| Ved Jay Makhijani | 104762184 | Team Leader |
+| Dinith Thejana | 105231766 | Team Member (Simulation Backend) |
+| Kaveesha Dharmadasa | 105271678 | Team Member (Documentation / Scene Representation) |
 
 **Supervisors:** Prof. Prem Prakash Jayaraman · Prof. Boris Eisenbart · Muhammad Saeed  
 **Industry Partner:** ARENA2036 / University of Stuttgart
@@ -41,29 +41,29 @@ User instruction
 P54-Embodied-Multimodal-LLM-for-Industrial-Task-Planning/
 │
 ├── main.py                              ← Pipeline entry point
+├── benchmark.py                         ← LLM parse latency benchmark
 ├── conftest.py                          ← Pytest configuration
 ├── pytest.ini                           ← Test markers
 ├── requirements.txt                     ← Dependencies
 ├── README.md
-├── .env                                 ← API keys (never committed)
+├── .env                                 ← API keys / config (never committed)
 ├── .env.example                         ← Template — copy to .env
 │
-├── llm_backend/                         ← LLM instruction parser (Sprint 1)
+├── llm_backend/                         ← LLM instruction parser
 │   ├── __init__.py
 │   ├── custom_LLM_parser.py             ← parse_instruction() — main entry point
 │   ├── schema.py                        ← ParsedInstruction Pydantic model
 │   ├── prompts.py                       ← System prompt + 6 few-shot examples
 │   ├── edge_cases.py                    ← Empty/vague/synonym handling
 │   ├── tracker.py                       ← Cross-domain pipeline task tracker
-│   ├── demo.py                          ← LLM module demo
-│   ├── hello_world.py                   ← API connection test
+│   ├── hello_world.py                   ← API/backend connection test
 │   └── backends/                        ← Per-model API implementations
 │       ├── openai_backend.py            ← GPT-4o via OpenAI API
 │       ├── gemini_backend.py            ← Gemini via Google API
 │       ├── deepseek_backend.py          ← DeepSeek via OpenAI-compatible API
-│       └── huggingface_backend.py       ← Local HuggingFace models
+│       └── huggingface_backend.py       ← Local HuggingFace models (no API key)
 │
-├── llm_backend/LLM_eval/                ← Multi-model evaluation (Sprint 2/3)
+├── llm_backend/LLM_eval/                ← Multi-model evaluation
 │   ├── comparison_report.py             ← Full evaluation report runner
 │   ├── evaluator.py                     ← Runs models against test cases
 │   ├── metrics.py                       ← 10 metrics per model per category
@@ -72,39 +72,59 @@ P54-Embodied-Multimodal-LLM-for-Industrial-Task-Planning/
 │   ├── baseline_parser.py               ← Rule-based parser (no LLM) for comparison
 │   ├── eval_report.py                   ← End-to-end + baseline evaluation runner
 │   ├── evaluation_metrics.csv           ← Generated — metrics output
-│   └── evaluation_results.json         ← Generated — raw per-case results
+│   └── evaluation_results.json          ← Generated — raw per-case results
 │
-├── task_planner/                        ← Task planning module (Sprint 2/3)
+├── task_planner/                        ← Task planning module
 │   ├── __init__.py
 │   └── planner.py                       ← Rule-based planner with spatial relations
 │
-├── simulation_backend/                  ← Execution module (Sprint 2)
+├── simulation_backend/                  ← Execution + live vision module
 │   ├── __init__.py
 │   ├── action_schema.py                 ← RobotCommand, ActionPlan Pydantic schemas
 │   ├── mock_robot.py                    ← MockRobot simulator (no PyBullet required)
 │   ├── executor.py                      ← Runs ActionPlan step by step
+│   ├── simulation.py                    ← Owns the PyBullet session; picks robot via ROBOT_MODEL
+│   ├── display_scene.py                 ← Standalone live detection-window viewer
+│   ├── scene_config.yaml                ← Workspace/object/robot layout config
+│   ├── URDF_DOCUMENTATION.md            ← URDF asset authorship & licensing notes
+│   ├── assets/block_urdf/               ← Custom table/tray/block/workstation URDFs
+│   │
+│   ├── simulation_environment/          ← PyBullet scene construction
+│   │   ├── workspace.py                 ← Table/floor/walls
+│   │   ├── object_loader.py             ← Loads objects from scene_config.yaml
+│   │   ├── object_registry.py           ← Maps PyBullet body_ids to labels
+│   │   └── scene_builder.py             ← Detector output → planner scene dict
+│   │
+│   ├── vision/                          ← Live vision stack
+│   │   ├── scene_representation.py      ← get_current_scene() — Stage 2 entry point
+│   │   ├── camera.py                    ← PyBullet camera capture
+│   │   ├── detection_base.py            ← Abstract detector interface
+│   │   ├── ground_truth.py              ← Exact-position fallback detector
+│   │   ├── detection_implementation/    ← colour_detector.py, yolo_detector.py
+│   │   └── detection_weight/            ← Cached YOLO weights (downloaded on first run)
+│   │
 │   └── robots/                          ← Real robot implementations
-│       ├── kuka_robot.py
-│       ├── ur5_robot.py
-│       └── franka_pand_robot.py
+│       ├── robot_base.py                ← Abstract RobotBase interface
+│       ├── Franka_panda.py              ← ROBOT_MODEL=franka
+│       ├── Kuka_IIWA.py                 ← ROBOT_MODEL=kuka
+│       └── gripper/                     ← franka_hand.py, gripper_base.py
 │
-├── vision_backend/                      ← Vision module (Sprint 1/2)
-│   ├── __init__.py
-│   ├── vision_output.py                 ← YOLOv8 object detection
-│   ├── scene_representation.py          ← Object label + position mapping
-│   ├── spatial_relationships.py         ← Left/right/near spatial reasoning
-│   ├── invalid_actions.py              ← Action validation
-│   └── safety_checks.py                ← Pre-execution safety validation
+├── fine_tuning/                         ← Model fine-tuning artifacts (datasets, training runs, weights)
 │
-├── tests/                               ← Test suite
-│   ├── test_llm_module.py               ← 24 unit tests (Sprint 1)
-│   ├── test_sprint2.py                  ← 38 unit tests (Sprint 2)
-│   ├── integration_tests.py             ← 67 integration tests (Sprint 3)
-│   └── test_2.py
+├── helper_scripts/                      ← Standalone utility scripts, run independently of the main pipeline
+│
+├── tests/                               ← Test suite (145 tests total)
+│   ├── test_llm_module.py               ← 40 tests (28 unit + 12 integration)
+│   ├── test_2.py                        ← 35 tests (24 unit + 11 integration)
+│   ├── test_sprint2.py                  ← 38 unit tests
+│   ├── integration_tests.py             ← 31 tests (29 unit + 2 integration)
+│   └── test_real_vision_adapter.py      ← 1 unit test
 │
 └── documentation/                       ← Reports and docs
     ├── vision_framework_comparison.md
-    └── tool_recommendations.md
+    ├── tool_recommendations.md
+    ├── P54_Evaluation_Report.pdf
+    └── simulation_backend_diagrams.xml
 ```
 
 ---
@@ -128,31 +148,39 @@ source .venv/bin/activate        # Mac/Linux
 ```bash
 pip install -r requirements.txt
 ```
+Torch is pulled in by `transformers`; if you need GPU support, install the CUDA-specific torch wheel
+*before* `pip install -r requirements.txt` (see comments in `requirements.txt`).
 
 ### 4. Configure environment variables
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and fill in your API keys:
+Edit `.env` and fill in the values you need. Only the vars for your chosen `LLM_BACKEND` are required:
 ```
 # Controls which LLM the pipeline uses
-LLM_BACKEND=openai      # or: gemini, deepseek, huggingface
+LLM_BACKEND=openai      # openai | gemini | deepseek | huggingface
 
 # OpenAI (GPT-4o)
 OPENAI_API_KEY=sk-your-key-here
 OPENAI_MODEL=gpt-4o
-OPENAI_TEMPERATURE=0.0
 
 # Google Gemini
 GEMINI_API_KEY=your-key-here
-GEMINI_MODEL=gemini-1.5-pro
-GEMINI_TEMPERATURE=0.0
+GEMINI_MODEL=gemini-2.5-flash-lite
 
 # DeepSeek
 DEEPSEEK_API_KEY=your-key-here
 DEEPSEEK_MODEL=deepseek-chat
-DEEPSEEK_TEMPERATURE=0.0
+
+# HuggingFace — runs a local model, no API key or internet needed after first download
+HF_MODEL=Qwen/Qwen2.5-7B-Instruct
+
+# Vision / simulation / robot (see .env.example for the full list)
+USE_LIVE_SIMULATION=true       # false falls back to a static JSON scene in drafts/
+SIMULATION_MODE=DIRECT         # DIRECT (headless) | GUI (visual debug window)
+VISION_DETECTOR=yolo           # empty (ground truth only) | colour | yolo
+ROBOT_MODEL=mock               # mock | franka | kuka  (ur5 not yet implemented)
 ```
 
 Each team member uses their own `.env` with their own keys. The `.env` file is in `.gitignore` and is never committed.
@@ -170,12 +198,18 @@ python main.py "pick up the red block and place it in the left tray"
 ```bash
 python main.py --interactive
 ```
-Type any instruction at the prompt. Type `status` to see the tracker summary. Type `quit` to exit.
+Type any instruction at the prompt. Type `status` to see the tracker summary. Type `reset` to reset the scene. Type `quit` to exit.
 
 ### Quiet mode (minimal output)
 ```bash
 python main.py --quiet "locate the yellow block"
 ```
+
+### Force live simulation
+```bash
+python main.py --live "pick up the red block"
+```
+Overrides `USE_LIVE_SIMULATION` for this run regardless of what's in `.env`.
 
 ### Switch model without changing code
 Set `LLM_BACKEND` in your `.env`:
@@ -213,22 +247,22 @@ python main.py "PICK UP THE RED BLOCK AND PLACE IT IN THE LEFT TRAY"
 ```bash
 pytest tests/ -v -m "not integration"
 ```
-Expected: **129 passed**
+Expected: **120 passed, 25 deselected**
 
-### Integration tests only (no API required)
+### Integration-style tests that still don't need an API key
 ```bash
 pytest tests/integration_tests.py -v -m "not integration"
 ```
 
-### Full test suite including LLM calls (requires API key)
+### Full test suite including real LLM calls (requires API key)
 ```bash
 pytest tests/ -v
 ```
+145 tests total (120 unit + 25 marked `integration`, spread across `test_llm_module.py`, `test_2.py`, and `integration_tests.py`).
 
 ### Single test class
 ```bash
 pytest tests/integration_tests.py::TestSpatialRelationPlanning -v
-pytest tests/integration_tests.py::TestFullPipelineIntegration -v
 pytest tests/test_sprint2.py::TestMockRobot -v
 ```
 
@@ -259,7 +293,7 @@ python eval_report.py --export
 ```
 Outputs: `evaluation_metrics.csv` and `evaluation_results.json`
 
-### Sprint 2 multi-model comparison report
+### Multi-model comparison report
 ```bash
 cd llm_backend/LLM_eval
 python comparison_report.py
@@ -283,24 +317,16 @@ python comparison_report.py
 ## Pipeline Stages
 
 ### Stage 1 — LLM Parse (`llm_backend/custom_LLM_parser.py`)
-Sends instruction to GPT-4o / Gemini / DeepSeek with a structured system prompt and 6 few-shot examples. Returns `ParsedInstruction` with action, object, destination, spatial relation, and confidence. Handles empty, vague, and synonym edge cases before calling the API.
+Sends the instruction to GPT-4o / Gemini / DeepSeek / a local HuggingFace model (selected via `LLM_BACKEND`) with a structured system prompt and 6 few-shot examples. Returns `ParsedInstruction` with action, object, destination, spatial relation, and confidence. Handles empty, vague, and synonym edge cases before calling the model.
 
-### Stage 2 — Vision Lookup (`vision_backend/`)
-Detects objects in the simulation using YOLOv8 and OpenCV. Returns a scene map of object labels and (x, y) positions. Currently uses a stub in `main.py` — swap `get_scene()` for `get_current_scene()` from `vision_backend.scene_representation` to connect the real module.
-
-**To connect real vision module:**
-```python
-# In main.py, replace get_scene() with:
-from vision_backend.scene_representation import get_current_scene
-def get_scene() -> dict:
-    return get_current_scene()
-```
+### Stage 2 — Vision Lookup (`simulation_backend/vision/scene_representation.py`)
+`get_current_scene()` captures the live PyBullet workspace through `simulation_backend/simulation.py`. Detection priority per object: primary detector (YOLO or colour threshold, if `VISION_DETECTOR` is set) first, then ground truth (exact PyBullet positions) as fallback for anything the detector missed. Fails fast with a `RuntimeError` if any object registered in the workspace is missing from the detected scene. If `USE_LIVE_SIMULATION=false`, falls back to a static JSON scene in `drafts/` instead.
 
 ### Stage 3 — Task Planning (`task_planner/planner.py`)
-Rule-based planner combining `ParsedInstruction` and scene map into an ordered `ActionPlan`. Generates `locate → move → pick → move → place` sequences. Sprint 3 added spatial offset handling — "left of", "right of", "near", "on top of" etc. compute offset positions relative to reference objects.
+Rule-based planner combining `ParsedInstruction` and the scene map into an ordered `ActionPlan`. Generates `locate → move → pick → move → place` sequences. Spatial offset handling — "left of", "right of", "near", "next to", "on top of", "in front of", "behind" — computes offset positions relative to reference objects.
 
 ### Stage 4 — Execution (`simulation_backend/`)
-`Executor` runs each `RobotCommand` sequentially on `MockRobot`. Stops on first failure and returns `ExecutionResult`. Swap `MockRobot` for a real robot implementation from `simulation_backend/robots/` to connect PyBullet.
+`Executor` runs each `RobotCommand` sequentially, stops on first failure, and returns an `ExecutionResult`. The robot is selected by `ROBOT_MODEL` in `.env` — `mock` (default, no PyBullet arm), `franka`, or `kuka` — all implementing the same `RobotBase` interface, so switching robots is a config change, not a code change. `ur5` is not yet implemented and falls back to `MockRobot`.
 
 ### Stage 5 — Feedback (`llm_backend/tracker.py`)
 Validates task completion, logs all 5 stages to `task_log.json` with a unique `task_id`. Triggers retry flag on failure or low confidence.
@@ -314,6 +340,7 @@ Validates task completion, logs all 5 stages to `task_log.json` with a unique `t
   PIPELINE START
   Instruction : pick up the red block and place it in the left tray
   Model       : openai
+  Vision      : REAL
   Task ID     : d3c4f72a
 ════════════════════════════════════════════════════════════
 
@@ -325,7 +352,7 @@ Validates task completion, logs all 5 stages to `task_log.json` with a unique `t
        Confidence  : high
        Latency     : 2926ms
 
-  [2/5] Vision Lookup  [STUB]
+  [2/5] Vision Lookup  [REAL]
        Objects in scene: ['red block', 'blue block', ..., 'left tray', 'right tray']
 
   [3/5] Task Planning
@@ -361,19 +388,21 @@ The task planner supports positional instructions using offset-based spatial rea
 | next to | (+1.2, 0.0) | "place it next to the blue block" |
 | on top of | (0.0, 0.0) | "stack the red block on top of the blue block" |
 | in front of | (0.0, −1.5) | "move it in front of the workstation" |
+| behind | (0.0, +1.5) | "place it behind the workstation" |
 | in | (0.0, 0.0) | "place the block in the left tray" |
 
 ---
 
 ## Test Coverage
 
-| File | Tests | API needed | PyBullet needed |
+| File | Tests | Unit (no API) | Marked `integration` (needs API) |
 |---|---|---|---|
-| `tests/test_llm_module.py` | 24 | No | No |
-| `tests/test_sprint2.py` | 38 | No | No |
-| `tests/integration_tests.py` | 67 | No | No |
-| LLM integration (`-m integration`) | 11 | Yes | No |
-| **Total (no API)** | **129** | — | — |
+| `tests/test_llm_module.py` | 40 | 28 | 12 |
+| `tests/test_2.py` | 35 | 24 | 11 |
+| `tests/test_sprint2.py` | 38 | 38 | 0 |
+| `tests/integration_tests.py` | 31 | 29 | 2 |
+| `tests/test_real_vision_adapter.py` | 1 | 1 | 0 |
+| **Total** | **145** | **120** | **25** |
 
 ---
 
@@ -381,7 +410,7 @@ The task planner supports positional instructions using offset-based spatial rea
 
 **Rule-based task planner** — Deterministic, zero API cost, fully testable without external dependencies, and sufficient for the constrained pick-and-place simulation environment. An LLM-based planner can be substituted in future iterations.
 
-**MockRobot** — Eliminates cross-platform PyBullet dependency during development. The `Executor` interface is identical for mock and real robots — swap one import.
+**MockRobot** — Implements the same `RobotBase`-shaped interface as the real robots, with no PyBullet arm dependency, so tests and fast dev iterations don't need a real robot. Real robot execution (Franka, KUKA) is selected via `ROBOT_MODEL` in `.env` — the `Executor` code is identical either way.
 
 **Pydantic schemas** — `ParsedInstruction`, `RobotCommand`, `ActionPlan` enforce strict interface contracts between modules. Validation errors surface at module boundaries rather than deep in pipeline logic.
 
@@ -391,13 +420,14 @@ The task planner supports positional instructions using offset-based spatial rea
 
 ---
 
-## Sprint Progress
+## Project Progress
 
-| Sprint | Weeks | Deliverables |
-|---|---|---|
-| Sprint 1 | 4–6 | LLM parser, schema, prompts, edge cases, multi-model evaluation framework, 24 unit tests |
-| Sprint 2 | 7–9 | Task planner, mock robot, executor, action schema, 5-stage pipeline, tracker, 38 unit tests |
-| Sprint 3 | 10–12 | Spatial relation handling, multi-step planning, baseline parser, full evaluation suite, 67 integration tests |
+| Phase | Deliverables |
+|---|---|
+| Sprint 1 | LLM parser, schema, prompts, edge cases, multi-model evaluation framework |
+| Sprint 2 | Task planner, mock robot, executor, action schema, 5-stage pipeline, tracker |
+| Sprint 3 | Spatial relation handling, multi-step planning, baseline parser, full evaluation suite |
+| Final | Live PyBullet vision (YOLO/colour + ground-truth fallback), Franka/KUKA real robot execution, end-to-end regression testing |
 
 ---
 

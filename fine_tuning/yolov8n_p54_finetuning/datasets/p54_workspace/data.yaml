@@ -1,0 +1,12 @@
+path: fine_tuning/yolov8n_p54_finetuning/datasets/p54_workspace
+train: images/train
+val: images/val
+names:
+  0: red block
+  1: blue block
+  2: green block
+  3: yellow block
+  4: left tray
+  5: right tray
+  6: workstation
+nc: 7

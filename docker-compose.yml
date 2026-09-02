@@ -1,0 +1,31 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: p54_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: unless-stopped
+
+  p54:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/arm64
+    container_name: p54_pipeline
+    env_file:
+      - .env
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - LLM_BACKEND=ollama
+      - ROBOT_BACKEND=mock
+    volumes:
+      - .:/app
+    depends_on:
+      - ollama
+    stdin_open: true
+    tty: true
+
+volumes:
+  ollama_models:

@@ -1,0 +1,13 @@
+.venv/
+capstone/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+*.egg-info/
+.git/
+drafts/
+task_log.json
+eval_report.csv
+eval_report.json
+llm_cache

@@ -18,9 +18,9 @@ Public interface:
         planner-compatible scene dict:
         {"objects": [{"label": str, "position": (x, y)}, ...]}
 
-    get_robot() -> MockRobot
-        Returns the active robot instance ready for Executor.
-        Phase 1: always MockRobot. Phase 3: real PyBullet robot.
+    get_robot() -> RobotBase | MockRobot
+        Returns the active robot instance ready for Executor — MockRobot,
+        FrankaPanda, or KukaIIWA, selected by ROBOT_MODEL in .env.
 
     reset() -> None
         Resets all object positions to their scene_config.yaml defaults.
@@ -124,7 +124,7 @@ class Simulation:
         Returns:
             {
                 "objects": [
-                    {"label": "red block",  "position": (0.45, -0.20)},
+                    {"label": "red block",  "position": [0.45, -0.20, 0.05]},
                     ...
                 ]
             }
@@ -178,10 +178,8 @@ class Simulation:
 
     def get_robot(self):
         """
-        Return the active robot instance.
-
-        Phase 1 & 2: always MockRobot.
-        Phase 3: returns a RobotBase subclass selected by ROBOT_MODEL env var.
+        Return the active robot instance — MockRobot, FrankaPanda, or
+        KukaIIWA — selected by ROBOT_MODEL in .env (see _load_robot()).
         """
         return self._robot
 
@@ -305,7 +303,7 @@ class Simulation:
         Options:
             mock   -> MockRobot (default, no URDF, no physics arm)
             franka -> FrankaPanda (loads panda.urdf from pybullet_data)
-            kuka   -> KukaIIWA [future]
+            kuka   -> KukaIIWA (loads kuka_iiwa/model.urdf from pybullet_data)
             ur5    -> UniversalRobotUR5 [future]
 
         Returns:
@@ -349,7 +347,41 @@ class Simulation:
                 )
                 return MockRobot()
 
-        elif robot_model in ("kuka", "ur5"):
+        elif robot_model == "kuka":
+            try:
+                import pybullet_data
+                from simulation_backend.robots.Kuka_IIWA import KukaIIWA
+
+                urdf_path = os.path.join(
+                    pybullet_data.getDataPath(),
+                    "kuka_iiwa", "model.urdf",
+                )
+                body_id = p.loadURDF(
+                    urdf_path,
+                    basePosition=[0.0, 0.0, 0.0],
+                    useFixedBase=True,
+                    physicsClientId=self._client,
+                )
+                robot = KukaIIWA(
+                    physics_client=self._client,
+                    body_id=body_id,
+                    registry=registry,
+                )
+                robot.reset()
+                logger.info(
+                    f"Robot: KukaIIWA loaded "
+                    f"(body_id={body_id}, base=[0.0, 0.0, 0.0])."
+                )
+                return robot
+
+            except Exception as e:
+                logger.error(
+                    f"Failed to load KukaIIWA: {e}. "
+                    f"Falling back to MockRobot."
+                )
+                return MockRobot()
+
+        elif robot_model == "ur5":
             logger.warning(
                 f"ROBOT_MODEL={robot_model} is not yet implemented. "
                 f"Falling back to MockRobot."

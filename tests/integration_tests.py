@@ -3,11 +3,11 @@ integration_tests.py
 --------------------
 PB11: Integration test suite for the full 5-stage pipeline.
 
-Tests run a complete instruction through all stages:
-    instruction → task planner → executor → mock robot → assert final state
+Tests run a parsed instruction through the local planning/execution stages:
+    parsed instruction → task planner → executor → mock robot → assert final state
 
-All tests use MockRobot and the test scene — no API calls, no PyBullet needed.
-Mark tests that need real LLM with @pytest.mark.integration.
+Local tests use MockRobot and a fixture scene — no API calls, no PyBullet needed.
+Tests that need a real LLM are marked with @pytest.mark.integration.
 
 Run unit-safe tests only (no API):
     pytest integration_tests.py -v -m "not integration"
@@ -422,8 +422,9 @@ class TestBaselineParser:
 
     def test_baseline_evaluation_runs(self):
         from llm_backend.LLM_eval.baseline_parser import run_baseline_evaluation
+        from llm_backend.LLM_eval.test_cases import TEST_CASES
         results = run_baseline_evaluation(verbose=False)
-        assert len(results) == 25  # all test cases
+        assert len(results) == len(TEST_CASES)  # all test cases
         assert all("model" in r for r in results)
         assert all(r["model"] == "baseline" for r in results)
 

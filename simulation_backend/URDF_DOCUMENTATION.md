@@ -1,8 +1,8 @@
 # URDF Asset Documentation
 
 **Project:** P54 — Embodied Multimodal LLM for Industrial Task Planning  
-**Package:** `simulation_backend/assets/urdf/`  
-**Last updated:** May 2026
+**Package:** `simulation_backend/assets/block_urdf/`  
+**Last updated:** August 2026
 
 ---
 
@@ -47,7 +47,7 @@ Source: Bullet3 / pybullet_data package
 Repository: https://github.com/bulletphysics/bullet3/tree/master/data/kuka_iiwa  
 Licence: Distributed as part of pybullet_data under the zlib/libpng licence. The Kuka IIWA robot model is provided for simulation and research purposes.
 
-**Universal Robots UR5**  
+**Universal Robots UR5** *(not yet wired into the pipeline — `ROBOT_MODEL=ur5` currently falls back to MockRobot; documented here for future use)*  
 Source: Universal Robots ROS2 Description / community PyBullet port  
 Repository: https://github.com/UniversalRobots/Universal_Robots_ROS2_Description  
 Licence: Apache License 2.0. See https://www.apache.org/licenses/LICENSE-2.0
@@ -63,7 +63,7 @@ Licence: Apache License 2.0.
 ```yaml
 # scene_config.yaml
 - label: <label_to_display_in_Pybullet>
-  urdf:  simulation_backend/assets/urdf/<filename>.urdf
+  urdf:  simulation_backend/assets/block_urdf/<filename>.urdf
   color: [0.35, 0.35, 0.35, 1.0] 
   position: [0.80, 0.00, 0.0]
   mass_kg: 0.0
@@ -88,7 +88,7 @@ PyBullet URDF loading documentation: https://docs.google.com/document/d/10sXEhzF
 
 To add a new object to the simulation:
 
-1. Create a new `.urdf` file in `simulation_backend/assets/urdf/` using primitive geometry (`<box>`, `<sphere>`, `<cylinder>`)
+1. Create a new `.urdf` file in `simulation_backend/assets/block_urdf/` using primitive geometry (`<box>`, `<sphere>`, `<cylinder>`)
 2. Add a new entry to the `objects` list in `simulation_backend/scene_config.yaml`
 3. No code changes are required — `object_loader.py` reads the config and loads all entries automatically
 

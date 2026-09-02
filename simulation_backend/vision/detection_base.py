@@ -3,9 +3,9 @@ detection_base.py
 -----------------
 Abstract base class for all object detectors in the simulation vision pipeline.
 
-Every concrete detector — colour threshold, YOLO, SAM, open-vocabulary,
-depth-based, or any future model — must inherit from DetectorBase and
-implement the single abstract method: detect().
+Every concrete detector — colour threshold, YOLO, or any future model (e.g.
+SAM, open-vocabulary, depth-based — not yet implemented) — must inherit
+from DetectorBase and implement the single abstract method: detect().
 
 Design goals:
     1. One interface.  SceneBuilder and display_scene.py call detect() without

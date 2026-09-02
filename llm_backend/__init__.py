@@ -4,9 +4,12 @@ llm_backend
 Natural language instruction parser for the Multimodal LLM Industrial Task Planning project.
 COS40005 Capstone -- Swinburne University / ARENA2036
 
-Supports OpenAI and Gemini backends. Select via LLM_BACKEND in your .env:
-    LLM_BACKEND=openai   (default)
+Supports OpenAI, Gemini, DeepSeek, and local HuggingFace backends.
+Select via LLM_BACKEND in your .env:
+    LLM_BACKEND=openai        (default)
     LLM_BACKEND=gemini
+    LLM_BACKEND=deepseek
+    LLM_BACKEND=huggingface
 
 Public interface:
     from llm_backend import parse_instruction

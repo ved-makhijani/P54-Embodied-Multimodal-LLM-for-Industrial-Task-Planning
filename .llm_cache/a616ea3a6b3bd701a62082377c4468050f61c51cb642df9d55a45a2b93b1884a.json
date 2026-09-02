@@ -1,0 +1,9 @@
+{
+  "action": "pick",
+  "object_target": "red block",
+  "destination": null,
+  "spatial_relation": null,
+  "confidence": "high",
+  "raw_instruction": "pick up the red block",
+  "notes": null
+}

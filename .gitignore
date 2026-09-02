@@ -211,9 +211,9 @@ __marimo__/
 .DS_Store
 *.DS_Store
 capstone/
-.DS_Store
-*.DS_Store
 
 
 #The detection models are large and are not necessary to include in version control. They can be downloaded separately.
 simulation_backend/vision/detection_models
+
+llm_cache

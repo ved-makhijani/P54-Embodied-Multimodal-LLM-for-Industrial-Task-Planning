@@ -6,9 +6,10 @@ Simulates robot behaviour without requiring PyBullet.
 Maintains internal state (position, held object, object map) and responds
 to commands by updating that state and returning success/failure responses.
 
-Designed to be a drop-in replacement for the real PyBullet robot interface —
-when the real simulation is ready, swap MockRobot for RealRobot with no
-changes to the pipeline code.
+Designed as a drop-in implementation of the same RobotBase interface used
+by the real PyBullet robots (FrankaPanda, KukaIIWA in simulation_backend/robots/).
+Selected via ROBOT_MODEL=mock in .env (the default) — no pipeline code
+changes needed to switch between MockRobot and a real robot.
 
 Usage:
     from simulation_backend.mock_robot import MockRobot

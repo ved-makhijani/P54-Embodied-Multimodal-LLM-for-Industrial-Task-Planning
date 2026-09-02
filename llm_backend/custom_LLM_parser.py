@@ -102,40 +102,25 @@ def _clean_json(text: str) -> str:
 
 # -- Public interface ----------------------------------------------------------
 def parse_instruction(instruction: str, max_retries: int = 2) -> ParsedInstruction:
-    """
-    Parse a natural language robot instruction into a structured ParsedInstruction.
-
-    Args:
-        instruction:  Plain English task instruction from the operator.
-        max_retries:  Retry attempts on JSON parse failure (default: 2).
-
-    Returns:
-        ParsedInstruction: Validated structured output.
-
-    Raises:
-        ValueError: If the instruction is empty or parsing fails after all retries.
-
-    Example:
-        >>> result = parse_instruction("pick up the red block")
-        >>> result.action          # ActionType.PICK
-        >>> result.object_target   # "red block"
-        >>> result.confidence      # ConfidenceLevel.HIGH
-    """
-    # Step 1 -- reject empty
+    # existing pre-checks ...
     if is_empty_instruction(instruction):
         raise ValueError("Instruction cannot be empty.")
-
-    # Step 2 -- short-circuit vague (saves API credits)
     if is_too_vague(instruction):
-        logger.warning(f"Vague instruction short-circuited (no API call): '{instruction}'")
         return make_vague_result(instruction)
 
-    # Step 3 -- normalise
     instruction = normalise_instruction(instruction)
-    logger.info(f"Parsing: '{instruction}' via {os.getenv('LLM_BACKEND', 'openai')} backend")
+    model = os.getenv("LLM_BACKEND", "openai")
 
-    # Step 4 -- LLM call with retry
-    # Messages are built fresh each call so the instruction is injected cleanly.
+    # ── Cache check ──────────────────────────────────────────────────────────
+    from llm_backend.cache import get_cached, save_cache
+    cached = get_cached(instruction, model)
+    if cached:
+        logger.info(f"[Cache] Returning cached result for: '{instruction}'")
+        return ParsedInstruction(**cached)
+
+    logger.info(f"Parsing: '{instruction}' via {model} backend")
+
+    # existing LLM call ...
     last_error = None
     for attempt in range(1, max_retries + 1):
         try:
@@ -144,27 +129,25 @@ def parse_instruction(instruction: str, max_retries: int = 2) -> ParsedInstructi
                 HumanMessage(content=f"Instruction: {instruction}"),
             ]
             response = _get_llm().invoke(messages)
-
-            # Gemini sometimes returns content as a list instead of string
             raw_content = response.content
-
             if isinstance(raw_content, list):
                 raw_content = " ".join(
                     str(item) if not isinstance(item, dict)
                     else item.get("text", "")
                     for item in raw_content
                 )
-
             result = output_parser.parse(_clean_json(raw_content))
-            logger.info(f"Parsed successfully on attempt {attempt}: {result}")
+            result = validate_parsed_result(result)
 
-            # Step 5 -- post-validate
-            return validate_parsed_result(result)
+            # ── Save to cache ─────────────────────────────────────────────
+            save_cache(instruction, model, result.model_dump(mode="json"))
+
+            logger.info(f"Parsed successfully on attempt {attempt}: {result}")
+            return result
 
         except OutputParserException as e:
             last_error = e
             logger.warning(f"Attempt {attempt} failed (OutputParserException): {e}")
-
         except Exception as e:
             last_error = e
             logger.warning(f"Attempt {attempt} failed ({type(e).__name__}): {e}")

@@ -3,9 +3,9 @@ gripper_base.py
 ---------------
 Abstract base class for all gripper controllers in the simulation pipeline.
 
-Every gripper — Franka Hand, Robotiq 85, custom parallel-jaw, or future
-models — must inherit from GripperBase and implement the three abstract
-methods: open(), close(), and get_state().
+Every gripper — Franka Hand, or any future model (e.g. Robotiq 85,
+custom parallel-jaw — not yet implemented) — must inherit from GripperBase
+and implement the three abstract methods: open(), close(), and get_state().
 
 Design goals:
     1. One interface.  RobotBase subclasses call self._gripper.open() and

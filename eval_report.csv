@@ -1,8 +1,0 @@
-model,category,instruction_accuracy,parse_success_rate,action_accuracy,object_accuracy,destination_accuracy,spatial_accuracy,avg_latency_ms,error_rate
-Rule-Based (No LLM),ambiguous,0.0,,,,,,0.0,100.0
-Rule-Based (No LLM),edge_case,75.0,,,,,,0.0,0.0
-Rule-Based (No LLM),multi_step,33.3,,,,,,0.0,0.0
-Rule-Based (No LLM),simple,60.0,,,,,,0.0,0.0
-Rule-Based (No LLM),spatial,60.0,,,,,,0.0,0.0
-Rule-Based (No LLM),synonym,60.0,,,,,,0.0,0.0
-Rule-Based (No LLM),OVERALL,52.0,88.0,88.0,88.0,84.0,60.0,0.0,12.0

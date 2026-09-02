@@ -4,29 +4,29 @@ simulation_backend/vision/detection_implementation/yolo_detector.py
 YOLOv8 object detector for the simulation vision pipeline.
 
 Config is read from environment variables (set in .env):
-    YOLO_WEIGHTS      : weights filename inside detection_models/. Default: yolov8n.pt
+    YOLO_WEIGHTS      : weights filename inside detection_weight/. Default: yolov8n.pt
     YOLO_CONFIDENCE   : min detection confidence (0.0-1.0). Default: 0.25
     YOLO_IOU          : NMS IoU threshold. Default: 0.45
     YOLO_DEVICE       : cpu | cuda | mps | auto. Default: cpu
     YOLO_IMGSZ        : inference image size in pixels. Default: 640
 
 Weights are stored in and loaded from:
-    simulation_backend/vision/detection_models/<YOLO_WEIGHTS>
+    simulation_backend/vision/detection_weight/<YOLO_WEIGHTS>
 
 On first run the file is downloaded automatically by ultralytics and
-then copied into detection_models/ so every subsequent run is local
+then copied into detection_weight/ so every subsequent run is local
 with no network access needed.
 
 How detection works:
     1. warmup()  — loads the model once, copies weights into
-                   detection_models/ if they were downloaded.
+                   detection_weight/ if they were downloaded.
 
     2. detect()  — for each bounding box YOLO returns:
                      a. Reads frame.seg at the bbox centre pixel to get
                         the PyBullet body_id (no COCO class lookup needed).
                      b. Resolves body_id -> label via ObjectRegistry.
-                     c. Samples depth at bbox centre -> Z in metres.
-                     d. Uses registry cached (x, y) + depth Z as 3D position.
+                     c. Resolves the live registry pose for world coordinates.
+                     d. Uses registry cached (x, y, z) as the 3D position.
                      e. Returns Detection with YOLO's real confidence score.
 
     Why seg mask instead of class names?
@@ -55,8 +55,8 @@ from simulation_backend.simulation_environment.object_registry import ObjectRegi
 
 logger = logging.getLogger(__name__)
 
-# Canonical weights folder: simulation_backend/vision/detection_models/
-_MODELS_DIR = Path(__file__).resolve().parent.parent / "detection_models"
+# Canonical weights folder: simulation_backend/vision/detection_weight/
+_MODELS_DIR = Path(__file__).resolve().parent.parent / "detection_weight"
 
 
 class YOLODetector(DetectorBase):
@@ -67,12 +67,12 @@ class YOLODetector(DetectorBase):
     No scene_config.yaml keys are used.
 
     Weights resolution order in warmup():
-        1. simulation_backend/vision/detection_models/<YOLO_WEIGHTS>  (local, preferred)
+        1. simulation_backend/vision/detection_weight/<YOLO_WEIGHTS>  (local, preferred)
         2. Current working directory / <YOLO_WEIGHTS>
-        3. Ultralytics auto-download -> then copied into detection_models/
+        3. Ultralytics auto-download -> then copied into detection_weight/
 
     After the first successful run the weights file will always be in
-    detection_models/ so no network access is needed afterwards.
+    detection_weight/ so no network access is needed afterwards.
     """
 
     name = "yolo"
@@ -96,11 +96,11 @@ class YOLODetector(DetectorBase):
 
     def warmup(self) -> None:
         """
-        Load YOLOv8 weights and ensure they are saved in detection_models/.
+        Load YOLOv8 weights and ensure they are saved in detection_weight/.
 
-        If the weights file is not in detection_models/, ultralytics downloads
+        If the weights file is not in detection_weight/, ultralytics downloads
         it automatically on YOLO() instantiation. After loading we check where
-        the model saved its checkpoint and copy it into detection_models/ so
+        the model saved its checkpoint and copy it into detection_weight/ so
         the next run finds it locally at priority 1.
         """
         try:
@@ -113,7 +113,7 @@ class YOLODetector(DetectorBase):
         logger.info(f"[yolo] Loading: {self._weights_path}")
         self._model = YOLO(str(self._weights_path))
 
-        # Copy into detection_models/ if the file was downloaded elsewhere
+        # Copy into detection_weight/ if the file was downloaded elsewhere
         local_target = _MODELS_DIR / self._weights_name
         if not local_target.exists():
             cached = None
@@ -128,12 +128,12 @@ class YOLODetector(DetectorBase):
                     _MODELS_DIR.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(cached, local_target)
                     logger.info(
-                        f"[yolo] Weights copied to detection_models/: {local_target}"
+                        f"[yolo] Weights copied to detection_weight/: {local_target}"
                     )
                     self._weights_path = local_target
                 except Exception as e:
                     logger.warning(
-                        f"[yolo] Could not copy weights to detection_models/: {e}"
+                        f"[yolo] Could not copy weights to detection_weight/: {e}"
                     )
             else:
                 logger.warning(
@@ -158,8 +158,7 @@ class YOLODetector(DetectorBase):
             1. Centre pixel (cx, cy) of the box.
             2. frame.seg[cy, cx] -> PyBullet body_id at that pixel.
             3. registry.get_by_id(body_id) -> ObjectEntry (label + position).
-            4. _depth_at_bbox_centre() -> metric Z in metres.
-            5. Registry (x, y) + depth Z -> 3D world position.
+            4. Registry position -> 3D world position.
             6. Deduplicate by body_id, keeping highest confidence per object.
 
         Returns:
@@ -209,9 +208,9 @@ class YOLODetector(DetectorBase):
                 logger.debug(f"[yolo] body_id={body_id} not in registry, skipping.")
                 continue
 
-            z = self._depth_at_bbox_centre(frame, bbox)
             x = float(entry.position[0])
             y = float(entry.position[1])
+            z = float(entry.position[2])
 
             if body_id in detections and confidence <= detections[body_id].confidence:
                 continue
@@ -227,7 +226,8 @@ class YOLODetector(DetectorBase):
 
             logger.debug(
                 f"[yolo] '{entry.label}'  body_id={body_id}  "
-                f"conf={confidence:.2f}  bbox=({x1},{y1},{x2},{y2})  z={z:.3f}m"
+                f"conf={confidence:.2f}  bbox=({x1},{y1},{x2},{y2})  "
+                f"world=({x:.3f},{y:.3f},{z:.3f})"
             )
 
         found = list(detections.values())
@@ -260,7 +260,7 @@ class YOLODetector(DetectorBase):
     def _resolve_weights_path(weights_name: str) -> Path:
         """
         Priority:
-            1. simulation_backend/vision/detection_models/<weights_name>
+            1. simulation_backend/vision/detection_weight/<weights_name>
             2. Current working directory / <weights_name>
             3. weights_name as-is — ultralytics will download on YOLO()
         """
@@ -275,7 +275,7 @@ class YOLODetector(DetectorBase):
             return cwd_path
 
         logger.info(
-            f"[yolo] {weights_name} not in detection_models/. "
-            f"Will download on warmup and save to detection_models/."
+            f"[yolo] {weights_name} not in detection_weight/. "
+            f"Will download on warmup and save to detection_weight/."
         )
         return Path(weights_name)

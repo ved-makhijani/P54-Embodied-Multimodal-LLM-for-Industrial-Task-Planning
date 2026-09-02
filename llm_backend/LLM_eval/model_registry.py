@@ -37,16 +37,18 @@ except ImportError:
 load_dotenv()
 logger = logging.getLogger(__name__)
 
-ModelName = Literal["openai", "gemini", "deepseek"]
+ModelName = Literal["openai", "gemini", "deepseek","ollama"]
 
 # ── All supported models ───────────────────────────────────────────────────────
-AVAILABLE_MODELS: list[ModelName] = ["openai", "gemini", "deepseek"]
+AVAILABLE_MODELS: list[ModelName] = ["openai", "gemini", "deepseek","ollama"]
 
 # ── Friendly display names for reports ────────────────────────────────────────
 MODEL_DISPLAY_NAMES: dict[ModelName, str] = {
     "openai":   f"GPT-4o ({os.getenv('OPENAI_MODEL', 'gpt-4o')})",
     "gemini":   f"Gemini ({os.getenv('GEMINI_MODEL', 'gemini-1.5-pro')})",
     "deepseek": f"DeepSeek ({os.getenv('DEEPSEEK_MODEL', 'deepseek-chat')})",
+    "ollama":   f"Qwen ({os.getenv('OLLAMA_MODEL', 'qwen2.5:7b')} — Local)",
+
 }
 
 # ── Shared prompt + output parser ─────────────────────────────────────────────

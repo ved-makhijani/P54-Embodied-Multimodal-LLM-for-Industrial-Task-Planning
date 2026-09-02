@@ -180,14 +180,14 @@ class SceneBuilder:
             rich_scene: Output of build()
 
         Returns:
-            {"objects": [{"label": str, "position": (x, y, z)}]}
+            {"objects": [{"label": str, "position": [x, y, z]}]}
         """
         objects = []
         for obj in rich_scene.get("detected_objects", []):
             coords = obj["position"]["coordinates_3d"]
             objects.append({
                 "label":    obj["label"],
-                "position": (coords["x"], coords["y"], coords["z"]),
+                "position": [coords["x"], coords["y"], coords["z"]],
             })
         return {"objects": objects}
 

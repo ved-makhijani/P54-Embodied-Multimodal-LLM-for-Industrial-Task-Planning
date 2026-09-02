@@ -13,7 +13,7 @@ Usage:
 
 import os
 
-SUPPORTED_BACKENDS = ("openai", "gemini", "deepseek", "huggingface")
+SUPPORTED_BACKENDS = ("openai", "gemini", "deepseek", "ollama")
 
 
 def get_llm_by_name(backend: str):
@@ -21,7 +21,7 @@ def get_llm_by_name(backend: str):
     Return an initialised LangChain LLM for the given backend name.
 
     Args:
-        backend: One of "openai", "gemini", "deepseek", "huggingface"
+        backend: One of "openai", "gemini", "deepseek", "ollama"
 
     Returns:
         A LangChain-compatible LLM instance.
@@ -37,8 +37,8 @@ def get_llm_by_name(backend: str):
         from .gemini_backend import build_llm
     elif backend == "deepseek":
         from .deepseek_backend import build_llm
-    elif backend == "huggingface":
-        from .huggingface_backend import build_llm
+    elif backend == "ollama":
+        from .ollama_backend import build_llm
     else:
         raise ValueError(
             f"Unsupported backend '{backend}'. "
@@ -55,10 +55,10 @@ def get_llm():
     LLM_BACKEND=openai       -> openai_backend.build_llm()      (default)
     LLM_BACKEND=gemini       -> gemini_backend.build_llm()
     LLM_BACKEND=deepseek     -> deepseek_backend.build_llm()
-    LLM_BACKEND=huggingface  -> huggingface_backend.build_llm() (fully local)
+    LLM_BACKEND=ollama       -> ollama_backend.build_llm() (fully local)
 
     Raises:
         ValueError: If LLM_BACKEND is set to an unsupported value.
     """
-    backend = os.getenv("LLM_BACKEND", "openai")
+    backend = os.getenv("LLM_BACKEND", "ollama")
     return get_llm_by_name(backend)

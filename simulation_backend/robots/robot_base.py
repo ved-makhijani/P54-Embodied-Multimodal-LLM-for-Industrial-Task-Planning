@@ -3,8 +3,9 @@ robot_base.py
 -------------
 Abstract base class for all robot arm controllers in the simulation pipeline.
 
-Every concrete robot — Franka Panda, Kuka IIWA, UR5, or any future model —
-must inherit from RobotBase and implement the five abstract command methods.
+Every concrete robot — Franka Panda, Kuka IIWA, or any future model (e.g.
+UR5, not yet implemented) — must inherit from RobotBase and implement the
+five abstract command methods.
 
 Design goals:
     1. One interface.  Executor calls move_to(), move_to_object(), pick(),

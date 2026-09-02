@@ -59,16 +59,16 @@ camera:
   mode:           eye_to_hand
 
   # Camera mount position in world coordinates
-  position:       [1.5, 0.0, 1.8]    # x, y, z in metres
+  position:       [0.70, 0.0, 1.80]  # x, y, z in metres
 
   # Point the camera looks at
-  target:         [0.0, 0.0, 0.0]
+  target:         [0.55, 0.0, 0.02]
 
   # Camera orientation — which direction is "up" in the image
-  up_vector:      [0.0, 0.0, 1.0]
+  up_vector:      [0.0, 1.0, 0.0]
 
   # Lens settings
-  fov:            60                  # field of view in degrees
+  fov:            55                  # field of view in degrees
   aspect_ratio:   1.333               # width / height (640/480)
   near_val:       0.1                 # near clipping plane in metres
   far_val:        10.0                # far clipping plane in metres
@@ -141,7 +141,7 @@ objects:
     label:        blue block
     urdf:         simulation_backend/assets/block_urdf/block.urdf
     color:        [0.0, 0.0, 1.0, 1.0]
-    position:     [0.60, 0.10, 0.05]
+    position:     [0.25, 0.35, 0.05]
     orientation:  [0.0, 0.0, 0.0, 1.0]
     mass_kg:      0.1
     graspable:    true
@@ -153,7 +153,7 @@ objects:
     label:        green block
     urdf:         simulation_backend/assets/block_urdf/block.urdf
     color:        [0.0, 0.8, 0.0, 1.0]
-    position:     [0.30, 0.20, 0.05]
+    position:     [0.35, 0.12, 0.05]
     orientation:  [0.0, 0.0, 0.0, 1.0]
     mass_kg:      0.1
     graspable:    true
@@ -165,7 +165,7 @@ objects:
     label:        yellow block
     urdf:         simulation_backend/assets/block_urdf/block.urdf
     color:        [1.0, 1.0, 0.0, 1.0]
-    position:     [0.55, -0.10, 0.05]
+    position:     [0.25, -0.35, 0.05]
     orientation:  [0.0, 0.0, 0.0, 1.0]
     mass_kg:      0.1
     graspable:    true
