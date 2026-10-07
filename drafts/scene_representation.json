@@ -1,44 +1,11 @@
 {
-  "image_id": "scene_01",
-  "scene": {
-    "red block": {
-      "center": [
-        150,
-        110
-      ],
-      "bounding_box": [
-        120,
-        80,
-        60,
-        60
-      ],
-      "confidence": 0.95
-    },
-    "blue tray": {
-      "center": [
-        350,
-        235
-      ],
-      "bounding_box": [
-        300,
-        200,
-        100,
-        70
-      ],
-      "confidence": 0.91
-    },
-    "green block": {
-      "center": [
-        247,
-        127
-      ],
-      "bounding_box": [
-        220,
-        100,
-        55,
-        55
-      ],
-      "confidence": 0.88
-    }
-  }
+  "objects": [
+    {"label": "red block",    "bounding_box": [430, 180, 40, 40]},
+    {"label": "blue block",   "bounding_box": [230, 330, 40, 40]},
+    {"label": "green block",  "bounding_box": [330, 108, 40, 40]},
+    {"label": "yellow block", "bounding_box": [230, 338, 40, 40]},
+    {"label": "left tray",    "bounding_box": [630, 430, 80, 60]},
+    {"label": "right tray",   "bounding_box": [630, 438, 80, 60]},
+    {"label": "workstation",  "bounding_box": [780,   0, 80, 80]}
+  ]
 }

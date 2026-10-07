@@ -12,7 +12,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.02270800177939236,
+    "latency_ms": 0.056583000059617916,
     "error": null,
     "parsed": {
       "action": "pick",
@@ -22,7 +22,7 @@
       "confidence": "high",
       "raw_instruction": "pick up the red block",
       "parse_success": true,
-      "latency_ms": 0.02270800177939236,
+      "latency_ms": 0.056583000059617916,
       "notes": null
     }
   },
@@ -39,7 +39,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.007333001121878624,
+    "latency_ms": 0.012917000049128546,
     "error": null,
     "parsed": {
       "action": "locate",
@@ -49,7 +49,7 @@
       "confidence": "high",
       "raw_instruction": "locate the yellow block",
       "parse_success": true,
-      "latency_ms": 0.007333001121878624,
+      "latency_ms": 0.012917000049128546,
       "notes": null
     }
   },
@@ -66,7 +66,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.005374982720240951,
+    "latency_ms": 0.010250000059386366,
     "error": null,
     "parsed": {
       "action": "place",
@@ -76,7 +76,7 @@
       "confidence": "high",
       "raw_instruction": "place the blue cube in the left tray",
       "parse_success": true,
-      "latency_ms": 0.005374982720240951,
+      "latency_ms": 0.010250000059386366,
       "notes": null
     }
   },
@@ -93,7 +93,7 @@
     "destination_correct": true,
     "spatial_correct": false,
     "confidence_correct": true,
-    "latency_ms": 0.004541012458503246,
+    "latency_ms": 0.007915999958640896,
     "error": null,
     "parsed": {
       "action": "move",
@@ -103,7 +103,7 @@
       "confidence": "high",
       "raw_instruction": "move the green block to the right tray",
       "parse_success": true,
-      "latency_ms": 0.004541012458503246,
+      "latency_ms": 0.007915999958640896,
       "notes": null
     }
   },
@@ -120,7 +120,7 @@
     "destination_correct": true,
     "spatial_correct": false,
     "confidence_correct": true,
-    "latency_ms": 0.004542001988738775,
+    "latency_ms": 0.007166999921537354,
     "error": null,
     "parsed": {
       "action": "locate",
@@ -130,7 +130,7 @@
       "confidence": "high",
       "raw_instruction": "find the blue block",
       "parse_success": true,
-      "latency_ms": 0.004542001988738775,
+      "latency_ms": 0.007166999921537354,
       "notes": null
     }
   },
@@ -147,7 +147,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.004750007065013051,
+    "latency_ms": 0.010792000011861091,
     "error": null,
     "parsed": {
       "action": "move",
@@ -157,7 +157,7 @@
       "confidence": "high",
       "raw_instruction": "move the green block to the right of the workstation",
       "parse_success": true,
-      "latency_ms": 0.004750007065013051,
+      "latency_ms": 0.010792000011861091,
       "notes": null
     }
   },
@@ -174,7 +174,7 @@
     "destination_correct": false,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.004250003257766366,
+    "latency_ms": 0.008291000085591804,
     "error": null,
     "parsed": {
       "action": "place",
@@ -184,7 +184,7 @@
       "confidence": "high",
       "raw_instruction": "place the red block to the left of the blue block",
       "parse_success": true,
-      "latency_ms": 0.004250003257766366,
+      "latency_ms": 0.008291000085591804,
       "notes": null
     }
   },
@@ -201,7 +201,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.0038750004023313522,
+    "latency_ms": 0.00904199987417087,
     "error": null,
     "parsed": {
       "action": "place",
@@ -211,7 +211,7 @@
       "confidence": "high",
       "raw_instruction": "put the yellow block near the workstation",
       "parse_success": true,
-      "latency_ms": 0.0038750004023313522,
+      "latency_ms": 0.00904199987417087,
       "notes": null
     }
   },
@@ -228,7 +228,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.0046670029405504465,
+    "latency_ms": 0.021333999939088244,
     "error": null,
     "parsed": {
       "action": "move",
@@ -238,7 +238,7 @@
       "confidence": "high",
       "raw_instruction": "move the blue cube on top of the right tray",
       "parse_success": true,
-      "latency_ms": 0.0046670029405504465,
+      "latency_ms": 0.021333999939088244,
       "notes": null
     }
   },
@@ -255,7 +255,7 @@
     "destination_correct": false,
     "spatial_correct": false,
     "confidence_correct": true,
-    "latency_ms": 0.004250003257766366,
+    "latency_ms": 0.008125000022118911,
     "error": null,
     "parsed": {
       "action": "place",
@@ -265,7 +265,7 @@
       "confidence": "high",
       "raw_instruction": "place the green block next to the red block",
       "parse_success": true,
-      "latency_ms": 0.004250003257766366,
+      "latency_ms": 0.008125000022118911,
       "notes": null
     }
   },
@@ -282,7 +282,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": false,
-    "latency_ms": 0.0031249946914613247,
+    "latency_ms": 0.024833999987095012,
     "error": null,
     "parsed": {
       "action": "pick",
@@ -292,7 +292,7 @@
       "confidence": "high",
       "raw_instruction": "grab the red block",
       "parse_success": true,
-      "latency_ms": 0.0031249946914613247,
+      "latency_ms": 0.024833999987095012,
       "notes": null
     }
   },
@@ -309,7 +309,7 @@
     "destination_correct": true,
     "spatial_correct": false,
     "confidence_correct": false,
-    "latency_ms": 0.0038339931052178144,
+    "latency_ms": 0.007542000048488262,
     "error": null,
     "parsed": {
       "action": "place",
@@ -319,7 +319,7 @@
       "confidence": "high",
       "raw_instruction": "drop the blue cube in the left tray",
       "parse_success": true,
-      "latency_ms": 0.0038339931052178144,
+      "latency_ms": 0.007542000048488262,
       "notes": null
     }
   },
@@ -336,7 +336,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": false,
-    "latency_ms": 0.00504200579598546,
+    "latency_ms": 0.035792000062429,
     "error": null,
     "parsed": {
       "action": "move",
@@ -346,7 +346,7 @@
       "confidence": "high",
       "raw_instruction": "transfer the green block to workstation A",
       "parse_success": true,
-      "latency_ms": 0.00504200579598546,
+      "latency_ms": 0.035792000062429,
       "notes": null
     }
   },
@@ -363,7 +363,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": false,
-    "latency_ms": 0.004959001671522856,
+    "latency_ms": 0.008499999921696144,
     "error": null,
     "parsed": {
       "action": "locate",
@@ -373,7 +373,7 @@
       "confidence": "high",
       "raw_instruction": "search for the yellow block",
       "parse_success": true,
-      "latency_ms": 0.004959001671522856,
+      "latency_ms": 0.008499999921696144,
       "notes": null
     }
   },
@@ -390,7 +390,7 @@
     "destination_correct": true,
     "spatial_correct": false,
     "confidence_correct": false,
-    "latency_ms": 0.00404199818149209,
+    "latency_ms": 0.007332999985010247,
     "error": null,
     "parsed": {
       "action": "pick",
@@ -400,7 +400,7 @@
       "confidence": "high",
       "raw_instruction": "take the red block and set it down in the right tray",
       "parse_success": true,
-      "latency_ms": 0.00404199818149209,
+      "latency_ms": 0.007332999985010247,
       "notes": null
     }
   },
@@ -417,7 +417,7 @@
     "destination_correct": true,
     "spatial_correct": false,
     "confidence_correct": true,
-    "latency_ms": 0.0037080026231706142,
+    "latency_ms": 0.00691700006427709,
     "error": null,
     "parsed": {
       "action": "pick",
@@ -427,7 +427,7 @@
       "confidence": "high",
       "raw_instruction": "pick up the red block and place it in the left tray",
       "parse_success": true,
-      "latency_ms": 0.0037080026231706142,
+      "latency_ms": 0.00691700006427709,
       "notes": null
     }
   },
@@ -444,7 +444,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": false,
-    "latency_ms": 0.0034999975468963385,
+    "latency_ms": 0.019041999848923297,
     "error": null,
     "parsed": {
       "action": "pick",
@@ -454,7 +454,7 @@
       "confidence": "high",
       "raw_instruction": "grab the blue block then drop it near the workstation",
       "parse_success": true,
-      "latency_ms": 0.0034999975468963385,
+      "latency_ms": 0.019041999848923297,
       "notes": null
     }
   },
@@ -471,7 +471,7 @@
     "destination_correct": true,
     "spatial_correct": false,
     "confidence_correct": true,
-    "latency_ms": 0.0041660096030682325,
+    "latency_ms": 0.17937500001607987,
     "error": null,
     "parsed": {
       "action": "move",
@@ -481,7 +481,7 @@
       "confidence": "high",
       "raw_instruction": "find the green block and move it to the right tray",
       "parse_success": true,
-      "latency_ms": 0.0041660096030682325,
+      "latency_ms": 0.17937500001607987,
       "notes": null
     }
   },
@@ -498,7 +498,7 @@
     "destination_correct": false,
     "spatial_correct": false,
     "confidence_correct": false,
-    "latency_ms": 0.004542001988738775,
+    "latency_ms": 0.018582999928185018,
     "error": "No object/colour keyword matched",
     "parsed": {
       "action": "place",
@@ -508,7 +508,7 @@
       "confidence": "medium",
       "raw_instruction": "put that thing over there",
       "parse_success": false,
-      "latency_ms": 0.004542001988738775,
+      "latency_ms": 0.018582999928185018,
       "notes": "No object/colour keyword matched"
     }
   },
@@ -525,7 +525,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": false,
-    "latency_ms": 0.003958994057029486,
+    "latency_ms": 0.008959000069808098,
     "error": "No object/colour keyword matched",
     "parsed": {
       "action": "move",
@@ -535,7 +535,7 @@
       "confidence": "medium",
       "raw_instruction": "move it to the left",
       "parse_success": false,
-      "latency_ms": 0.003958994057029486,
+      "latency_ms": 0.008959000069808098,
       "notes": "No object/colour keyword matched"
     }
   },
@@ -552,7 +552,7 @@
     "destination_correct": true,
     "spatial_correct": false,
     "confidence_correct": false,
-    "latency_ms": 0.005207984941080213,
+    "latency_ms": 0.009582999837220996,
     "error": "No action keyword matched",
     "parsed": {
       "action": null,
@@ -562,7 +562,7 @@
       "confidence": "medium",
       "raw_instruction": "do something with the block",
       "parse_success": false,
-      "latency_ms": 0.005207984941080213,
+      "latency_ms": 0.009582999837220996,
       "notes": "No action keyword matched"
     }
   },
@@ -579,7 +579,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": false,
-    "latency_ms": 0.0037080026231706142,
+    "latency_ms": 0.006999999868639861,
     "error": null,
     "parsed": {
       "action": "pick",
@@ -589,7 +589,7 @@
       "confidence": "high",
       "raw_instruction": "pick up the purple block",
       "parse_success": true,
-      "latency_ms": 0.0037080026231706142,
+      "latency_ms": 0.006999999868639861,
       "notes": null
     }
   },
@@ -606,7 +606,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.0030410010367631912,
+    "latency_ms": 0.005957999974270933,
     "error": null,
     "parsed": {
       "action": "pick",
@@ -616,7 +616,7 @@
       "confidence": "high",
       "raw_instruction": "PICK UP THE RED BLOCK",
       "parse_success": true,
-      "latency_ms": 0.0030410010367631912,
+      "latency_ms": 0.005957999974270933,
       "notes": null
     }
   },
@@ -633,7 +633,7 @@
     "destination_correct": true,
     "spatial_correct": true,
     "confidence_correct": true,
-    "latency_ms": 0.0024590117391198874,
+    "latency_ms": 0.004624999974112143,
     "error": null,
     "parsed": {
       "action": "pick",
@@ -643,7 +643,7 @@
       "confidence": "high",
       "raw_instruction": "pick  up   the   red   block",
       "parse_success": true,
-      "latency_ms": 0.0024590117391198874,
+      "latency_ms": 0.004624999974112143,
       "notes": null
     }
   },
@@ -660,7 +660,7 @@
     "destination_correct": false,
     "spatial_correct": false,
     "confidence_correct": true,
-    "latency_ms": 0.0038750004023313522,
+    "latency_ms": 0.0089580000803835,
     "error": null,
     "parsed": {
       "action": "place",
@@ -670,8 +670,278 @@
       "confidence": "high",
       "raw_instruction": "place the red block in workstation B",
       "parse_success": true,
-      "latency_ms": 0.0038750004023313522,
+      "latency_ms": 0.0089580000803835,
       "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "S06",
+    "category": "synonym",
+    "instruction": "transfer the component to assembly station A",
+    "parse_success": true,
+    "fully_correct": false,
+    "action_correct": true,
+    "object_correct": true,
+    "destination_correct": false,
+    "spatial_correct": true,
+    "confidence_correct": true,
+    "latency_ms": 0.010333000091122813,
+    "error": null,
+    "parsed": {
+      "action": "move",
+      "object_target": "component",
+      "destination": "workstation",
+      "spatial_relation": null,
+      "confidence": "high",
+      "raw_instruction": "transfer the component to assembly station A",
+      "parse_success": true,
+      "latency_ms": 0.010333000091122813,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "S07",
+    "category": "synonym",
+    "instruction": "Fetch the Blue block",
+    "parse_success": true,
+    "fully_correct": false,
+    "action_correct": false,
+    "object_correct": false,
+    "destination_correct": false,
+    "spatial_correct": true,
+    "confidence_correct": true,
+    "latency_ms": 0.006125000027168426,
+    "error": null,
+    "parsed": {
+      "action": "pick",
+      "object_target": "blue block",
+      "destination": null,
+      "spatial_relation": null,
+      "confidence": "high",
+      "raw_instruction": "Fetch the Blue block",
+      "parse_success": true,
+      "latency_ms": 0.006125000027168426,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "SP06",
+    "category": "spatial",
+    "instruction": "place the red block directly behind the workstation",
+    "parse_success": true,
+    "fully_correct": false,
+    "action_correct": false,
+    "object_correct": false,
+    "destination_correct": false,
+    "spatial_correct": false,
+    "confidence_correct": true,
+    "latency_ms": 0.007750000122541678,
+    "error": null,
+    "parsed": {
+      "action": "place",
+      "object_target": "red block",
+      "destination": "workstation",
+      "spatial_relation": "in",
+      "confidence": "high",
+      "raw_instruction": "place the red block directly behind the workstation",
+      "parse_success": true,
+      "latency_ms": 0.007750000122541678,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "SP07",
+    "category": "spatial",
+    "instruction": "move the yellow block above the blue block",
+    "parse_success": true,
+    "fully_correct": false,
+    "action_correct": true,
+    "object_correct": false,
+    "destination_correct": false,
+    "spatial_correct": false,
+    "confidence_correct": true,
+    "latency_ms": 0.009500000032858225,
+    "error": null,
+    "parsed": {
+      "action": "move",
+      "object_target": "blue block",
+      "destination": null,
+      "spatial_relation": "on top of",
+      "confidence": "high",
+      "raw_instruction": "move the yellow block above the blue block",
+      "parse_success": true,
+      "latency_ms": 0.009500000032858225,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "MS04",
+    "category": "multi_step",
+    "instruction": "pick up the red block then find the green block",
+    "parse_success": true,
+    "fully_correct": false,
+    "action_correct": false,
+    "object_correct": false,
+    "destination_correct": false,
+    "spatial_correct": false,
+    "confidence_correct": true,
+    "latency_ms": 0.019999999949504854,
+    "error": null,
+    "parsed": {
+      "action": "pick",
+      "object_target": "red block",
+      "destination": null,
+      "spatial_relation": "in",
+      "confidence": "high",
+      "raw_instruction": "pick up the red block then find the green block",
+      "parse_success": true,
+      "latency_ms": 0.019999999949504854,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "SY06",
+    "category": "synonym",
+    "instruction": "grab and deliver the green block to the right tray",
+    "parse_success": true,
+    "fully_correct": false,
+    "action_correct": false,
+    "object_correct": false,
+    "destination_correct": false,
+    "spatial_correct": false,
+    "confidence_correct": true,
+    "latency_ms": 0.022499999886349542,
+    "error": null,
+    "parsed": {
+      "action": "pick",
+      "object_target": "green block",
+      "destination": "right tray",
+      "spatial_relation": "right of",
+      "confidence": "high",
+      "raw_instruction": "grab and deliver the green block to the right tray",
+      "parse_success": true,
+      "latency_ms": 0.022499999886349542,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "EC05",
+    "category": "edge_case",
+    "instruction": "pick up the red block",
+    "parse_success": true,
+    "fully_correct": true,
+    "action_correct": true,
+    "object_correct": true,
+    "destination_correct": true,
+    "spatial_correct": true,
+    "confidence_correct": true,
+    "latency_ms": 0.005042000111643574,
+    "error": null,
+    "parsed": {
+      "action": "pick",
+      "object_target": "red block",
+      "destination": null,
+      "spatial_relation": null,
+      "confidence": "high",
+      "raw_instruction": "pick up the red block",
+      "parse_success": true,
+      "latency_ms": 0.005042000111643574,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "EC06",
+    "category": "edge_case",
+    "instruction": "LOCATE THE YELLOW BLOCK AND MOVE IT TO THE LEFT TRAY",
+    "parse_success": true,
+    "fully_correct": false,
+    "action_correct": false,
+    "object_correct": true,
+    "destination_correct": false,
+    "spatial_correct": false,
+    "confidence_correct": true,
+    "latency_ms": 0.1282919999994192,
+    "error": null,
+    "parsed": {
+      "action": "move",
+      "object_target": "yellow block",
+      "destination": "left tray",
+      "spatial_relation": "left of",
+      "confidence": "high",
+      "raw_instruction": "LOCATE THE YELLOW BLOCK AND MOVE IT TO THE LEFT TRAY",
+      "parse_success": true,
+      "latency_ms": 0.1282919999994192,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "AM04",
+    "category": "ambiguous",
+    "instruction": "move the object",
+    "parse_success": true,
+    "fully_correct": false,
+    "action_correct": false,
+    "object_correct": false,
+    "destination_correct": true,
+    "spatial_correct": true,
+    "confidence_correct": true,
+    "latency_ms": 0.017875000139611075,
+    "error": null,
+    "parsed": {
+      "action": "move",
+      "object_target": "object",
+      "destination": null,
+      "spatial_relation": null,
+      "confidence": "high",
+      "raw_instruction": "move the object",
+      "parse_success": true,
+      "latency_ms": 0.017875000139611075,
+      "notes": null
+    }
+  },
+  {
+    "model": "baseline",
+    "model_display": "Rule-Based (No LLM)",
+    "case_id": "AM05",
+    "category": "ambiguous",
+    "instruction": "put it somewhere safe",
+    "parse_success": false,
+    "fully_correct": false,
+    "action_correct": false,
+    "object_correct": false,
+    "destination_correct": true,
+    "spatial_correct": true,
+    "confidence_correct": false,
+    "latency_ms": 0.010334000080547412,
+    "error": "No object/colour keyword matched",
+    "parsed": {
+      "action": "place",
+      "object_target": null,
+      "destination": null,
+      "spatial_relation": null,
+      "confidence": "medium",
+      "raw_instruction": "put it somewhere safe",
+      "parse_success": false,
+      "latency_ms": 0.010334000080547412,
+      "notes": "No object/colour keyword matched"
     }
   }
 ]

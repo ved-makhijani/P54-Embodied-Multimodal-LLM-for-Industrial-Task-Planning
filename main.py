@@ -86,9 +86,26 @@ def _get_scene_and_robot(sim=None, verbose: bool = True):
         robot = sim.get_robot()
     else:
         scene = get_current_scene()
-        robot = MockRobot()
+        # robot = MockRobot()
+        robot = _get_robot()
     return scene, robot
 
+    # ── Robot backend selection ────────────────────────────────────────────────────
+_ROBOT_BACKEND = os.getenv("ROBOT_BACKEND", "mock").lower()
+
+def _get_robot():
+    if _ROBOT_BACKEND == "fake_ros":
+        from simulation_backend.robots.fake_ros_robot import FakeROSRobot
+        return FakeROSRobot()
+    elif _ROBOT_BACKEND == "ros":
+        from simulation_backend.robots.ros_robot import ROSRobot
+        return ROSRobot()
+    elif _ROBOT_BACKEND == "urscript":
+        from simulation_backend.robots.ur5_script_robot import UR5ScriptRobot
+        return UR5ScriptRobot()
+    else:
+        from simulation_backend.mock_robot import MockRobot
+        return MockRobot()
 
 # ── Pipeline ───────────────────────────────────────────────────────────────────
 

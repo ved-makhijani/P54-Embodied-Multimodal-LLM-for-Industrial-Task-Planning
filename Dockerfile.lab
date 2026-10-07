@@ -1,0 +1,20 @@
+FROM osrf/ros:humble-ros-base
+
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-colcon-common-extensions \
+    ros-humble-ros2-control \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    curl \
+    v4l2loopback-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir langchain-ollama flask opencv-python-headless
+
+COPY . .
+
+CMD ["bash", "-c", "source /opt/ros/humble/setup.bash && python3 main.py --interactive"]

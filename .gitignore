@@ -214,6 +214,8 @@ capstone/
 .DS_Store
 *.DS_Store
 
+robot home position.py
 
 #The detection models are large and are not necessary to include in version control. They can be downloaded separately.
 simulation_backend/vision/detection_models
+drafts/

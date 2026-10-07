@@ -134,6 +134,15 @@ def parse_instruction(instruction: str, max_retries: int = 2) -> ParsedInstructi
     instruction = normalise_instruction(instruction)
     logger.info(f"Parsing: '{instruction}' via {os.getenv('LLM_BACKEND', 'openai')} backend")
 
+        # Step 3.5 -- cache check (returns instantly if cached)
+    from llm_backend.cache import get_cached, save_cache
+    _model = os.getenv("LLM_BACKEND", "openai")
+    cached = get_cached(instruction, _model)
+    if cached:
+        logger.info(f"[Cache] Returning cached result for: '{instruction}'")
+        return ParsedInstruction(**cached)
+
+    
     # Step 4 -- LLM call with retry
     # Messages are built fresh each call so the instruction is injected cleanly.
     last_error = None
@@ -157,6 +166,7 @@ def parse_instruction(instruction: str, max_retries: int = 2) -> ParsedInstructi
 
             result = output_parser.parse(_clean_json(raw_content))
             logger.info(f"Parsed successfully on attempt {attempt}: {result}")
+            save_cache(instruction, _model, result.model_dump(mode="json"))
 
             # Step 5 -- post-validate
             return validate_parsed_result(result)

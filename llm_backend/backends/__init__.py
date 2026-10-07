@@ -13,7 +13,7 @@ Usage:
 
 import os
 
-SUPPORTED_BACKENDS = ("openai", "gemini", "deepseek", "huggingface")
+SUPPORTED_BACKENDS = ("openai", "gemini", "deepseek", "huggingface", "ollama")
 
 
 def get_llm_by_name(backend: str):
@@ -39,6 +39,8 @@ def get_llm_by_name(backend: str):
         from .deepseek_backend import build_llm
     elif backend == "huggingface":
         from .huggingface_backend import build_llm
+    elif backend == "ollama":
+        from .ollama_backend import build_llm
     else:
         raise ValueError(
             f"Unsupported backend '{backend}'. "
